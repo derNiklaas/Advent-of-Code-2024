@@ -9,7 +9,7 @@ class Day01 : AoCDay() {
 
     init {
         input.forEach { line ->
-            val split = line.splitAndMapToInt(" ")
+            val split = line.splitAndMapToInt()
             leftList += split[0]
             rightList += split[1]
         }
