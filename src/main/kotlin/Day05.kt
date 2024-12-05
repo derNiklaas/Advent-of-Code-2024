@@ -4,14 +4,12 @@ import utils.splitAndMapToInt
 class Day05 : AoCDay() {
 
     val order: List<Pair<Int, Int>>
-    val printBefore = mutableMapOf<Int, Int>()
     val printingOrder: List<List<Int>>
 
     init {
         val parts = input.joinToString("\n").split("\n\n")
         order = parts[0].split("\n").map {
             val splits = it.splitAndMapToInt("|")
-            printBefore += splits[1] to splits[0]
             Pair(splits[0], splits[1])
         }
         printingOrder = parts[1].split("\n").splitAndMapToInt(",")
