@@ -43,10 +43,7 @@ class Day06 : AoCDay() {
         }
     }
 
-    private fun checkLoop(
-        obstacles: Set<Vec2D>,
-        checkLoop: Boolean = false
-    ): Triple<Boolean, Int, Int> {
+    private fun checkLoop(obstacles: Set<Vec2D>, checkLoop: Boolean = false): Triple<Boolean, Int, Int> {
         var counter = 0
         val visited = mutableSetOf<Pair<Vec2D, Vec2D>>(start to Vec2D.UP)
         var currentLocation = start
@@ -83,31 +80,6 @@ class Day06 : AoCDay() {
         }
 
         return Triple(false, uniqueLocations.size, counter)
-    }
-
-    fun printMap(visited: Set<Pair<Vec2D, Vec2D>>, obstacles: Set<Vec2D>) {
-        for (y in 0 until maxY) {
-            for (x in 0 until maxX) {
-                val pos = Vec2D(x, y)
-                var char = '.'
-                if (pos in obstacles) {
-                    char = '#'
-                } else {
-                    val movements = visited.filter { it.first == pos }
-                    val topDown = movements.filter { it.second == Vec2D.UP || it.second == Vec2D.DOWN }
-                    val leftRight = movements.filter { it.second == Vec2D.LEFT || it.second == Vec2D.RIGHT }
-                    if (topDown.size != 0 && leftRight.size != 0) {
-                        char = '+'
-                    } else if (topDown.size != 0) {
-                        char = '|'
-                    } else if (leftRight.size != 0) {
-                        char = '-'
-                    }
-                }
-                print(char)
-            }
-            println()
-        }
     }
 }
 
