@@ -1,71 +1,89 @@
 import utils.AoCDay
-import utils.splitAndMapToInt
 
 class Day09 : AoCDay() {
-    val lengths = input.first().splitAndMapToInt("")
-    val writes = mutableMapOf<Int, Int>()
-    val spaces = mutableMapOf<Int, Int>()
-
-    init {
-        var id = 0
-        lengths.forEachIndexed { index, length ->
-            if (index % 2 == 0) {
-                writes += id to length
-                id++
-            } else {
-                spaces += (id) to length
-            }
+    val blocks = input.first().mapIndexed { index, char ->
+        if (index % 2 == 0) {
+            Block.File(index / 2, char.digitToInt())
+        } else {
+            Block.Space(char.digitToInt())
         }
     }
 
-    // 2333133121414131402
-    // 2 3 1 3 2 4 4 3 4 2
-
     override fun part1(): Any {
-        var writeState = true
-        var result = 0L
+        val blocks = this.blocks.toMutableList()
 
-        var spaces = this.spaces.toMutableMap()
-        var writes = this.writes.toMutableMap()
-
-        var totalIndex = 0
-
-        while (writes.isNotEmpty()) {
-            if (writeState) {
-                val (id, amount) = writes.entries.first()
-                writes.remove(id, amount)
-                repeat(amount) {
-                    result += id * totalIndex.toLong()
-                    totalIndex++
-                }
-                writeState = false
-            } else {
-                if (spaces.isEmpty()) {
-                    writeState = true
-                    continue
-                }
-                val (spaceId, amountOfSpaces) = spaces.entries.first()
-                spaces.remove(spaceId, amountOfSpaces)
-
-                repeat(amountOfSpaces) {
-                    val (id, amountOfWrites) = writes.entries.last()
-                    writes.remove(id, amountOfWrites)
-                    if (amountOfWrites != 1) {
-                        writes += id to amountOfWrites - 1
+        while (blocks.any { it is Block.Space }) {
+            var block = blocks.removeLast()
+            if (block is Block.File) {
+                var file: Block.File? = block
+                while (file != null) {
+                    val spaceIndex = blocks.indexOfFirst { it is Block.Space }
+                    if (spaceIndex == -1) {
+                        blocks.add(file)
+                        file = null
+                    } else {
+                        val space = blocks.removeAt(spaceIndex)
+                        if (space.size > file.size) {
+                            blocks.add(spaceIndex, Block.Space(space.size - file.size))
+                        }
+                        if (space.size >= file.size) {
+                            blocks.add(spaceIndex, file)
+                            file = null
+                        } else {
+                            blocks.add(spaceIndex, Block.File(file.id, space.size))
+                            file = Block.File(file.id, file.size - space.size)
+                        }
                     }
-                    result += id * totalIndex
-                    totalIndex++
                 }
-                writeState = true
+            }
+        }
+
+        return checksum(blocks)
+    }
+
+    override fun part2(): Any {
+        val blocks = this.blocks.toMutableList()
+        for (index in blocks.indices.reversed()) {
+            val block = blocks[index]
+            if (block is Block.File) {
+                val spaceIndex = blocks.indexOfFirst { it is Block.Space && it.size >= block.size }
+                if (spaceIndex != -1 && spaceIndex < index) {
+                    blocks[index] = Block.Space(block.size)
+                    val space = blocks.removeAt(spaceIndex)
+                    if (space.size > block.size) {
+                        blocks.add(spaceIndex, Block.Space(space.size - block.size))
+                    }
+                    blocks.add(spaceIndex, block)
+                }
+            }
+        }
+
+        return checksum(blocks)
+    }
+
+    fun checksum(blocks: List<Block>): Long {
+        var result = 0L
+        var i = 0
+        blocks.forEach { block ->
+            repeat(block.size) {
+                if (block is Block.File) {
+                    result += block.id * i
+                }
+                i++
             }
         }
 
         return result
     }
 
-    override fun part2(): Any {
-        return -1
+
+    sealed interface Block {
+        val size: Int
+
+        data class File(val id: Int, override val size: Int) : Block
+        data class Space(override val size: Int) : Block
     }
+
 }
 
 fun main() {
