@@ -86,3 +86,11 @@ fun Collection<Int>.lcmWolfram(): String {
 fun Collection<Long>.lcmWolfram(): String {
     return "https://www.wolframalpha.com/input?i2d=true&i=lcm%5C%2840%29${joinToString("%5C%2844%29")}%5C%2841%29"
 }
+
+fun Int.isEven(): Boolean {
+    return this % 2 == 0
+}
+
+fun Long.isEven(): Boolean {
+    return this % 2 == 0L
+}

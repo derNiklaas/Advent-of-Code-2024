@@ -1,8 +1,9 @@
 import utils.AoCDay
+import utils.isEven
 
 class Day09 : AoCDay() {
     val blocks = input.first().mapIndexed { index, char ->
-        if (index % 2 == 0) {
+        if (index.isEven()) {
             Block.File(index / 2, char.digitToInt())
         } else {
             Block.Space(char.digitToInt())
