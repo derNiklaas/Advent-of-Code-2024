@@ -29,7 +29,7 @@ data class Vec2D(val x: Int, val y: Int) {
             for (yChange in -1..1) {
                 // the middle point is not a neighbour
                 if (xChange == 0 && yChange == 0) continue
-                if (direct && abs(xChange) + abs(yChange) != 2) continue
+                if (direct && abs(xChange) + abs(yChange) == 2) continue
                 add(Vec2D(x + xChange, y + yChange))
             }
         }
@@ -42,10 +42,10 @@ data class Vec2D(val x: Int, val y: Int) {
     operator fun times(times: Int) = Vec2D(x * times, y * times)
 }
 
-operator fun <T> List<List<T>>.get(point: Vec2D): T = this[point.x][point.y]
+operator fun <T> List<List<T>>.get(point: Vec2D): T = this[point.y][point.x]
 
 operator fun <T> List<MutableList<T>>.set(point: Vec2D, t: T) {
-    this[point.x][point.y] = t
+    this[point.y][point.x] = t
 }
 
-fun <T> List<List<T>>.getOrNull(point: Vec2D): T? = this.getOrNull(point.x)?.getOrNull(point.y)
+fun <T> List<List<T>>.getOrNull(point: Vec2D): T? = this.getOrNull(point.y)?.getOrNull(point.x)
