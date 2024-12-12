@@ -60,6 +60,16 @@ fun List<String>.to2DCharArray(): Array<CharArray> {
     return this.map { it.toCharArray() }.toTypedArray()
 }
 
+fun List<String>.toPointMap(): Map<Vec2D, Char> {
+    val map = mutableMapOf<Vec2D, Char>()
+    for (y in this.indices) {
+        for (x in this[y].indices) {
+            map[Vec2D(x, y)] = this[y][x]
+        }
+    }
+    return map
+}
+
 @JvmName("mapInnerCollection")
 fun <I, O> Collection<Collection<I>>.mapInner(transform: (I) -> O) = this.map { it.map(transform) }
 
