@@ -79,7 +79,8 @@ class Day14 : AoCDay() {
         if (lookForTree && potentialTree) {
             printSpace(robots, false, iteration)
             println()
-            println("Is this a tree? (y/n)")
+            // this is such a niche reference to the minecraft show "Is that Sheep looking at you?" :D
+            println("Is that tree looking at you? (y/n)")
             val input = readln()
             if (input == "y") {
                 println("Part B: $iteration")
