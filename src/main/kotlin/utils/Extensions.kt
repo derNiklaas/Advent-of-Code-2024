@@ -104,3 +104,8 @@ fun Int.isEven(): Boolean {
 fun Long.isEven(): Boolean {
     return this % 2 == 0L
 }
+
+fun List<String>.chunkedInput(): List<List<String>> {
+    return this.joinToString("\n").split("\n\n").map { it.split("\n") }
+}
+

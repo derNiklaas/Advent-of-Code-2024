@@ -6,11 +6,13 @@ import org.jetbrains.kotlinx.multik.api.ndarray
 import org.jetbrains.kotlinx.multik.ndarray.operations.first
 import org.jetbrains.kotlinx.multik.ndarray.operations.last
 import utils.AoCDay
+import utils.chunkedInput
+import utils.mapInner
 import utils.mapToLong
 
 class Day13 : AoCDay() {
-    val splits = input.joinToString("\n").split("\n\n")
-        .map { it.split("\n").map { it.split(": ")[1].split(", ").map { it.drop(2) }.mapToLong() } }
+    val splits = input.chunkedInput()
+        .mapInner { it.split(": ")[1].split(", ").map { it.drop(2) }.mapToLong() }
     val validDistance = 0.01
 
     override fun part1(): Any {
