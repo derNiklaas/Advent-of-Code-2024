@@ -1,4 +1,5 @@
 import utils.AoCDay
+import utils.chunkedInput
 import utils.splitAndMapToInt
 
 class Day05 : AoCDay() {
@@ -7,12 +8,12 @@ class Day05 : AoCDay() {
     val printingOrder: List<List<Int>>
 
     init {
-        val parts = input.joinToString("\n").split("\n\n")
-        order = parts[0].split("\n").map {
+        val parts = input.chunkedInput()
+        order = parts[0].map {
             val splits = it.splitAndMapToInt("|")
-            Pair(splits[0], splits[1])
+            splits[0] to splits[1]
         }
-        printingOrder = parts[1].split("\n").splitAndMapToInt(",")
+        printingOrder = parts[1].splitAndMapToInt(",")
     }
 
     override fun part1(): Any {
