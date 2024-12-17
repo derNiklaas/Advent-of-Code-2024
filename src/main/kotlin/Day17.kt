@@ -113,32 +113,3 @@ class Day17 : AoCDay() {
 fun main() {
     Day17().execute()
 }
-
-/*
-
-2,4,1,2,7,5,1,3,4,3,5,5,0,3,3,0
-
-2, 4:
-reg[B] = reg[A] % 8
-
-1, 2:
-reg[B] = reg[B] xor 2
-
-7, 5:
-reg[C] = reg[A] % 8
-
-1, 3:
-reg[B] = reg[B] xor 3
-
-4, 3:
-reg[B] = reg[B] xor reg[C]
-
-5, 5:
-output += reg[B] % 8
-
-0, 3:
-reg[A] = reg[A] / 8
-
-3, 0:
-if (reg[A] != 0) goto 0
- */
