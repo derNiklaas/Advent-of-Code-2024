@@ -1,5 +1,4 @@
 import java.util.PriorityQueue
-import kotlin.math.min
 import utils.AoCDay
 import utils.Vec2D
 import utils.splitAndMapToInt
@@ -10,14 +9,13 @@ class Day18 : AoCDay() {
         Vec2D(x, y)
     }
 
-    val amountFirstPart = min(positions.size, 1024)
-    val dim = if (amountFirstPart == 1024) 70 else 6
+    val dim = 70
     val start = Vec2D(0, 0)
     val end = Vec2D(dim, dim)
 
     override fun part1(): Any {
         val fallen = mutableSetOf<Vec2D>()
-        positions.take(amountFirstPart).forEach { fallen += it }
+        positions.take(1024).forEach { fallen += it }
 
         fun search(): Int {
             val queue = PriorityQueue<Pair<Vec2D, Int>>(compareBy { it.second })
