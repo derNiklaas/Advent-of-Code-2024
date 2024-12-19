@@ -5,7 +5,7 @@ class Day19 : AoCDay() {
     val chunks = input.chunkedInput()
     val patterns = chunks[0].first().split(", ")
     val towels = chunks[1]
-    val matchCounts = towels.map { countMatches(it, patterns) }
+    val matchCounts = towels.map { countMatches(it) }
 
     override fun part1(): Any {
         return towels.indices.count { matchCounts[it] > 0 }
@@ -15,11 +15,7 @@ class Day19 : AoCDay() {
         return matchCounts.sum()
     }
 
-    fun countMatches(design: String, patterns: List<String>): Long {
-        return dp(design, patterns)
-    }
-
-    fun dp(design: String, patterns: List<String>): Long {
+    fun countMatches(design: String): Long {
         val cache = LongArray(design.length + 1) { 0L }
         cache[0] = 1L
         for (index in design.indices) {
@@ -32,7 +28,6 @@ class Day19 : AoCDay() {
         }
         return cache[design.length]
     }
-
 }
 
 fun main() {
