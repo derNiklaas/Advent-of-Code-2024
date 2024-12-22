@@ -109,3 +109,4 @@ fun List<String>.chunkedInput(): List<List<String>> {
     return this.joinToString("\n").split("\n\n").map { it.split("\n") }
 }
 
+fun <T> Iterable<T>.cartesianSquare(): List<Pair<T, T>> = flatMap { v -> map { v to it } }
