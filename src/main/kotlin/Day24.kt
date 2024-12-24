@@ -106,11 +106,8 @@ class Day24 : AoCDay() {
                 queue += gate
             }
         }
-        return binaryToLong(states, "z")
-    }
 
-    fun binaryToLong(states: Map<String, Boolean>, letter: String): Long {
-        return states.filter { it.key.startsWith(letter) }.toSortedMap().values.joinToString("") {
+        return states.filter { it.key.startsWith("z") }.toSortedMap().values.joinToString("") {
             if (it) "1" else "0"
         }.toLong(2)
     }
